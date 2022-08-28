@@ -1,4 +1,34 @@
-// validation
+// Project State Management
+
+class ProjectState {
+    private projects: any[] = [];
+
+    private static instance: ProjectState;
+
+    private constructor() {}
+
+    static getInstance() {
+        if (this.instance) {
+            return this.instance;
+        } 
+        this.instance = new ProjectState();
+        return this.instance;
+    }
+
+    addProject(title: string, description: string, numOfPeople: number) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: title,
+            description: description,
+            people: numOfPeople
+        }
+        this.projects.push(newProject)
+    }
+}
+
+const projectState = ProjectState.getInstance();
+
+// Validation Logic
 interface Validatable {
     value?: string | number;
     required?: boolean;
@@ -47,7 +77,7 @@ function autobind(
     return adjDescriptor;
 }
 
-// Project Class
+// Project Input Class
 class ProjectInput {
     templateElement: HTMLTemplateElement;
     appElement: HTMLDivElement;
@@ -131,5 +161,41 @@ class ProjectInput {
         this.peopleInput.value = '';
     }
 }
-
 const projectInput = new ProjectInput();
+
+// ProjectList Class
+
+class List {
+    templateElement: HTMLTemplateElement;
+    appElement: HTMLDivElement;
+    list: HTMLElement;
+    type: 'active' | 'completed';
+
+    constructor(type: "active" | 'completed') {
+        this.type = type;
+        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
+        
+        this.appElement = document.getElementById('app')! as HTMLDivElement;
+        
+        const importedNode = document.importNode(this.templateElement.content, true)
+        
+        this.list = importedNode.firstElementChild as HTMLElement;
+        this.list.id = `${this.type}-projects`;
+
+        this.loadList();
+        this.renderContent();
+    }
+
+    private loadList() {
+        this.appElement.insertAdjacentElement('beforeend', this.list);
+    }
+
+    private renderContent() {
+        const listId = `${this.type}-projects-list`;
+        this.list.querySelector('ul')!.id = listId;
+        this.list.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+    }
+}
+
+const activeProjectList = new List('active');
+const completedProjectList = new List('completed');
