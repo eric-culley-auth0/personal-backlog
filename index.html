@@ -6,11 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ProjectManager</title>
     <link rel="stylesheet" href="app.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script type="module" src="dist/app.js"></script>
   </head>
   <body>
-    <template id="nav-bar">
+    <template id="menu-bar">
       <nav>
+        <h1>Personal Backlog</h1>
+        <button id="drop-down-btn"><div>+</div></button>
       </nav>
     </template>
     <template id="project-input">
@@ -24,8 +29,8 @@
           <textarea id="description" rows="3"></textarea>
         </div>
         <div class="form-control">
-          <label for="people">People</label>
-          <input type="number" id="people" step="1" min="0" max="10" />
+          <label for="priority">Priority</label>
+          <input type="number" id="priority" step="1" min="1" max="3" />
         </div>
         <button type="submit">ADD PROJECT</button>
       </form>
@@ -45,6 +50,9 @@
         <ul></ul>
       </section>
     </template>
-    <div id="app"></div>
+    <div id="app">
+      <div id="list-container">
+      </div>
+    </div>
   </body>
 </html>

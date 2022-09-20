@@ -1,5 +1,5 @@
 import Component from "./base-component.js";
-import { Project } from "../models/project-model.js";
+import { Project, ProjectPriority } from "../models/project-model.js";
 import { Draggable } from "../models/drag-and-drop.js";
 import autobind from "../decorators/autobind.js";
 
@@ -32,7 +32,17 @@ export default class Item extends Component<HTMLUListElement, HTMLLIElement> imp
 
     renderContent(): void {
         this.element.querySelector('h2')!.textContent = this.project.title;
-        this.element.querySelector('h3')!.textContent = this.project.people.toString();
+        switch (this.project.priority) {
+            case ProjectPriority.Low:
+                this.element.querySelector('h3')!.textContent = "low";
+            break;
+            case ProjectPriority.Medium:
+                this.element.querySelector('h3')!.textContent = "medium";
+            break;
+            case ProjectPriority.High:
+                this.element.querySelector('h3')!.textContent = "high";
+            break;
+        }
         this.element.querySelector('p')!.textContent = this.project.description;
     }
 }

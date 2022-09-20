@@ -1,14 +1,19 @@
-import { Project, ProjectStatus } from '../models/project-model.js'
+import { Project, ProjectPriority, ProjectStatus } from '../models/project-model.js'
 
 // Project State Management
 type Listener = (items: Project[]) => void;
+
 export class ProjectState {
     private projects: Project[] = [];
     private listeners: Listener[] = [];
 
     private static instance: ProjectState;
 
-    private constructor() { }
+    private constructor() { 
+        if (localStorage) {
+            console.log(localStorage);
+        }
+    }
 
     static getInstance() {
         if (this.instance) {
@@ -18,8 +23,8 @@ export class ProjectState {
         return this.instance;
     }
 
-    addProject(title: string, description: string, numOfPeople: number) {
-        const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Backlog)
+    addProject(title: string, description: string, priority: ProjectPriority) {
+        const newProject = new Project(Math.random().toString(), title, description, priority, ProjectStatus.Backlog)
         this.projects.push(newProject)
         this.updateListeners();
     }

@@ -11,7 +11,7 @@ export default class List extends Component<HTMLDivElement, HTMLElement> impleme
     assignedProjects: Project[];
 
     constructor(private type: 'backlog' | 'active' | 'complete') {
-        super('project-list', 'app', false,`${type}-projects`);
+        super('project-list', 'list-container', false,`${type}-projects`);
         this.type = type;
         this.assignedProjects = [];
         
@@ -47,8 +47,7 @@ export default class List extends Component<HTMLDivElement, HTMLElement> impleme
                 projectState.moveProject(projId, ProjectStatus.Complete);
             break
         }
-
-        // projectState.moveProject(projId, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Complete);
+        droppedList[0].classList.remove('droppable');
     }
 
     @autobind
