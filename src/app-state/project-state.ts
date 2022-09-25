@@ -1,4 +1,4 @@
-import { Project, ProjectPriority, ProjectStatus } from '../models/project-model.js'
+import { Project, ProjectPriority, ProjectStatus, StoredProjectData } from '../models/project-model.js'
 
 // Project State Management
 type Listener = (items: Project[]) => void;
@@ -9,12 +9,6 @@ export class ProjectState {
 
     private static instance: ProjectState;
 
-    private constructor() { 
-        if (localStorage) {
-            console.log(localStorage);
-        }
-    }
-
     static getInstance() {
         if (this.instance) {
             return this.instance;
@@ -23,10 +17,32 @@ export class ProjectState {
         return this.instance;
     }
 
+    fetchStoredProjects(): void {
+        if (localStorage.length) {
+            for (let i = 0; i < localStorage.length; i++) {  
+                const [title, description, priority, status]: StoredProjectData = JSON.parse(localStorage.getItem(localStorage.key(i)!)!);
+                const storedProject: Project = new Project(
+                    localStorage.key(i)!,
+                    title,
+                    description,
+                    priority,
+                    status
+                ) 
+                this.projects.push(storedProject);
+                this.updateListeners();
+            }
+        }
+    }
+
     addProject(title: string, description: string, priority: ProjectPriority) {
-        const newProject = new Project(Math.random().toString(), title, description, priority, ProjectStatus.Backlog)
+        const id = Math.random().toString();
+        // Add to LocalStorage
+        localStorage.setItem(id, JSON.stringify([title, description, priority, 0]));
+        // Add to projects array
+        const newProject = new Project(id, title, description, priority, ProjectStatus.Backlog)
         this.projects.push(newProject)
         this.updateListeners();
+        console.log(this.projects)
     }
 
     moveProject(projectId: string, newStatus: ProjectStatus) {
@@ -35,6 +51,10 @@ export class ProjectState {
             project.status = newStatus;
             this.updateListeners();
         }
+        // Update LocalStorage
+        const [title, description, priority]: StoredProjectData = JSON.parse(localStorage.getItem(projectId)!);
+        localStorage.removeItem(projectId);
+        localStorage.setItem(projectId, JSON.stringify([title, description, priority, newStatus]))
     }
 
     addListener(listenerFn: Listener) {

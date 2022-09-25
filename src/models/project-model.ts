@@ -9,6 +9,14 @@ export class Project {
     ) {}
 }
 
+// Model of project stored in localstorage
+export type StoredProjectData = [
+    title: string, 
+    description: string, 
+    priority: ProjectPriority, 
+    status: ProjectStatus 
+]
+
 export enum ProjectStatus {
     Backlog,
     Active, 
