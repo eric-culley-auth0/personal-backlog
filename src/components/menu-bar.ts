@@ -1,4 +1,4 @@
-import Component from "./base-component.js";
+import Component from "./base-component";
 
 export default class MenuBar extends Component<HTMLDivElement, HTMLElement> {
     dropDownBtn: HTMLButtonElement;
@@ -14,15 +14,28 @@ export default class MenuBar extends Component<HTMLDivElement, HTMLElement> {
     menuDrop(): void {
         const upMenu = document.querySelector('.up-menu') as HTMLFormElement;
         const downMenu = document.querySelector('.down-menu') as HTMLFormElement;
-        if (upMenu) {
-            const inputForm = document.querySelector('.up-menu')!;
-            inputForm.classList.add('down-menu');
-            inputForm.classList.remove('up-menu');
+        const upLists = document.querySelector('.up-lists') as HTMLDivElement;
+        const downLists = document.querySelector('.down-lists') as HTMLDivElement;
+        const addBtn = document.querySelector('.add') as HTMLButtonElement;
+        const minusBtn = document.querySelector('.minus') as HTMLButtonElement;
+
+        if (upMenu && upLists && addBtn) {
+            this.dropDownBtn.textContent = '-';
+            // addBtn.classList.add('minus');
+            upMenu.classList.add('down-menu');
+            upLists.classList.add('down-lists');
+            addBtn.classList.remove('add');
+            upMenu.classList.remove('up-menu');
+            upLists.classList.remove('up-lists');
         }
-        if (downMenu) {
-            const inputForm = document.querySelector('.down-menu')!;
-            inputForm.classList.add('up-menu');
-            inputForm.classList.remove('down-menu');
+        if (downMenu && downLists && minusBtn) {
+            addBtn.textContent = '+';
+            minusBtn.classList.add('add');
+            downMenu.classList.add('up-menu');
+            downLists.classList.add('up-lists');
+            minusBtn.classList.remove('minus');
+            downMenu.classList.remove('down-menu');
+            downLists.classList.remove('down-lists');
         }
     } 
 

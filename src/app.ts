@@ -1,7 +1,7 @@
-import { projectState } from './app-state/project-state.js';
-import MenuBar from './components/menu-bar.js';
-import ProjectInput from './components/project-input.js';
-import List from './components/project-list.js';
+import { projectState } from './app-state/project-state';
+import MenuBar from './components/menu-bar';
+import ProjectInput from './components/project-input';
+import List from './components/project-list';
 
 // Instantiate Code
 new ProjectInput();

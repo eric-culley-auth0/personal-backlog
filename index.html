@@ -9,13 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script type="module" src="dist/app.js"></script>
+    <script type="module" src="dist/bundle.js"></script>
   </head>
   <body>
     <template id="menu-bar">
       <nav>
         <h1>Personal Backlog</h1>
-        <button id="drop-down-btn"><div>+</div></button>
+        <button id="drop-down-btn" class="add"><div>+</div></button>
       </nav>
     </template>
     <template id="project-input">
@@ -32,7 +32,7 @@
           <label for="priority">Priority</label>
           <input type="number" id="priority" step="1" min="1" max="3" />
         </div>
-        <button type="submit">ADD PROJECT</button>
+        <button id="form-submit-btn" type="submit">ADD PROJECT</button>
       </form>
     </template>
     <template id="single-project">
@@ -51,7 +51,7 @@
       </section>
     </template>
     <div id="app">
-      <div id="list-container">
+      <div id="list-container" class="up-lists">
       </div>
     </div>
   </body>
